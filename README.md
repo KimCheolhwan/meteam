@@ -1,4 +1,4 @@
-# meteam [HOME](https://meeteam.surge.sh/)
+[HOME](https://meeteam.surge.sh/) # meteam 
 
 ## Server Side
 > Server
