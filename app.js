@@ -3,7 +3,7 @@ var app = express();
 const bodyParser= require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-var mongoDB = 'mongodb://root:1748asdf@ds157571.mlab.com:57571/meeteamdb';
+var mongoDB = 'mongodb://user:111111@ds157571.mlab.com:57571/meeteamdb';
 var db
 
 app.set('view engine', 'ejs')
