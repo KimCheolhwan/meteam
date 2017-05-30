@@ -7,7 +7,7 @@ var mongoDB = 'mongodb://user:111111@ds157571.mlab.com:57571/meeteamdb';
 var db
 
 app.set('view engine', 'ejs')
-
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}))
 
 MongoClient.connect(mongoDB, (err, database) => {
@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
     // renders index.ejs
     res.render('index.ejs', {quotes: result})
   })
+})
+
+app.get('/index2', (req, res)=> {
+	res.sendfile('public/index2.html');
 })
 
 app.post('/quotes', (req, res) => {
