@@ -3,6 +3,17 @@
 <head>
 </head>
 <body>
+	<script>
+
+	var value = Request.params;
+	console.log('value is : ' + value);
+
+	</script>
 	<h1>Hello Universe</h1>
+	<form action="/user" method="POST">
+      <input type="text" placeholder="name" name="name">
+      <input type="text" placeholder="quote" name="age">
+      <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
