@@ -27,7 +27,14 @@ app.get('/', (req, res) => {
 })
 
 app.get('/index2', (req, res)=> {
-	res.sendfile('public/index2.html');
+	db.collection('test').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      // renders index.ejs
+      res.sendfile('public/index2.html', result)
+    })
+
+
+	// res.sendfile('public/index2.html');
 })
 
 app.post('/quotes', (req, res) => {
@@ -36,5 +43,14 @@ app.post('/quotes', (req, res) => {
 
 		console.log('saved to database')
 		res.redirect('/')
+	})
+})
+
+app.post('/user', (req, res) => {
+	db.collection('test').save(req.body, (err, result) => {
+		if (err) return console.log(err)
+
+		console.log('saved to database')
+		res.redirect('/index2.html')
 	})
 })
