@@ -28,7 +28,9 @@
         <div class="bottom-holder" >
             <strong><%= topics[i].name %></strong>
             <p> <%= topics[i].title %> </p>
+
             <div class="reply-box">
+				<% if(topics[i].comment != undefined){ %>
               <% for(var j=0; j<topics[i].comment.length; j++) {%>
                 <div class="reply">
                     <img src="comment.png"width='30', height='30' alt="">
@@ -46,6 +48,7 @@
                     </ul>
                 </div>
                 <% }%>
+				<% }%>
             </div>
             <div>
               <form style="display:none" id='<%=topics[i].pig%>' class="form" action="/" method="post">

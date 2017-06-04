@@ -38,6 +38,7 @@ app.listen(3000, () => {
 
 app.get('/', (req, res) => {
   db.collection('meteams').find().toArray((err, result) => {
+	  console.log("result is :: ", result)
     if (err) return console.log(err)
     // renders index.ejs
     res.render('index.ejs', {topics: result})
