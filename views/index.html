@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MeeTeam</title>
+    <link rel="stylesheet" href="../public/src/css/style.css">
+</head>
+<body>
+<header>
+    <div class="wrap">
+        <h1><a href="/">MeeTeam</a></h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">All</a></li>
+                <!-- <li><a href="#">Intro</a></li>
+                <li><a href="#">1week</a></li>
+                <li><a href="#">2week</a></li> -->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <% for(var i=0; i<topics.length; i++) {%>
+      <div class="grid">
+        <div class="img-holder" onclick="window.open('<%=topics[i].move%>')">
+            <img width="260" height="250" src="<%= topics[i].pig %>"></a>
+        </div>
+        <div class="bottom-holder" >
+            <strong><%= topics[i].name %></strong>
+            <p> <%= topics[i].title %> </p>
+            <div class="reply-box">
+              <% for(var j=0; j<topics[i].comment.length; j++) {%>
+                <div class="reply">
+                    <img src="comment.png"width='30', height='30' alt="">
+                    <strong><%= topics[i].comment[j].nickname %></strong>
+                    <p><%= topics[i].comment[j].desc %> </p>
+                    <ul>
+                        <!-- <li><a href="#">수정</a></li> -->
+                        <form class="" action="/remove" method="post">
+                          <input  type="hidden" name="pig" value='<%= topics[i].pig %>' >
+                          <input  type="hidden" name="nickname" value='<%=topics[i].comment[j].nickname%>' >
+                          <input  type="hidden" name="desc" value='<%=topics[i].comment[j].desc%>' >
+
+                          <button type="submit" >삭제</button>
+                        </form>
+                    </ul>
+                </div>
+                <% }%>
+            </div>
+            <div>
+              <form style="display:none" id='<%=topics[i].pig%>' class="form" action="/" method="post">
+                  <input  type="hidden" name="pig" value='<%= topics[i].pig %>' >
+                      <p>닉네임: <input type="text" name="nickname" value=""></p>
+                    댓글: <input type="textarea" name="desc">
+                    <input type="submit" value="작성">
+              </form>
+            </div>
+          </div>
+            <button class="btn-add"  onclick='fnclick("<%=topics[i].pig%>")' >add comment</button>
+        </div>
+    <% } %>
+  </div>
+
+<script type="text/javascript" src="src/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="src/js/blocksit.js"></script>
+<script>
+    $(document).ready(function() {
+        $(window).load( function() {
+            $('.container').BlocksIt({
+                numOfCol: 4,
+                offsetX: 6,
+                offsetY: 15,
+                blockElement: '.grid'
+            });
+        });
+
+        //window resize
+        var currentWidth = 1280;
+        $(window).resize(function() {
+            var winWidth = $(window).width();
+            var conWidth;
+            if(winWidth < 540) {
+                conWidth = 268;
+                col = 1
+            } else if(winWidth < 810) {
+                conWidth = 536;
+                col = 2
+            } else if(winWidth < 1080) {
+                conWidth = 804;
+                col = 3;
+            } else {
+                conWidth = 1072;
+                col = 4;
+            }
+
+            if(conWidth != currentWidth) {
+                currentWidth = conWidth;
+                $('.container').width(conWidth);
+                $('.container').BlocksIt({
+                    numOfCol: col,
+                    offsetX: 6,
+                    offsetY: 15,
+                    blockElement: '.grid'
+                });
+            }
+        });
+
+    });
+    function fnclick(param){
+        var form = document.getElementById(param);
+          if($(form).css('display')!='none'){
+              $(form).css('display','none');
+              }else {
+                $(form).css('display','inline');
+              }
+
+    }
+</script>
+</body>
+</html>
