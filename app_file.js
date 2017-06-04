@@ -13,8 +13,10 @@ var userSchema = mongoose.Schema({
     title: 'string',
     pig:'string',
     move:'string',
-    comment:['string']
-
+    comment:[{
+      nickname:'string',
+      desc:'string'
+    }]
 });
 
 // compiels our schema into a model
@@ -37,7 +39,7 @@ app.get('/', (req, res) => {
 app.post('/remove',(req,res)=>{
     MeTeam.update(
     { pig: req.body.pig},
-    { $pull: { comment:req.body.remove}},
+    { $pull: { comment:{nickname:req.body.nickname,desc:req.body.desc}}},
     (err, result) => {
       if (err) {
         res.status(500)
@@ -50,7 +52,7 @@ app.post('/remove',(req,res)=>{
 app.post('/',(req,res)=>{
   MeTeam.update(
   { pig: req.body.pig },
-  { $push:  { comment: req.body.desc }},
+  { $push:  { comment:{nickname:req.body.nickname,desc:req.body.desc}}},
   {safe: true, upsert: true, new : true},
   (err, result) => {
     if (err) {
@@ -58,14 +60,9 @@ app.post('/',(req,res)=>{
     }
  }
 );
-  MeTeam.find({},(err, result) => {
-    if (err) return console.log(err) // renders index.ejs
+  res.redirect('/');
 
-    res.render('index.ejs', {topics: result});
-    console.log(result);
-  })
 });
-
 
 app.listen(3000,function(){
   console.log('Connected, 3000 Port!');

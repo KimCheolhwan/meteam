@@ -12,9 +12,9 @@
         <nav>
             <ul>
                 <li><a href="#" class="active">All</a></li>
-                <li><a href="#">Intro</a></li>
+                <!-- <li><a href="#">Intro</a></li>
                 <li><a href="#">1week</a></li>
-                <li><a href="#">2week</a></li>
+                <li><a href="#">2week</a></li> -->
             </ul>
         </nav>
     </div>
@@ -22,8 +22,8 @@
 <div class="container">
     <% for(var i=0; i<topics.length; i++) {%>
       <div class="grid">
-        <div class="img-holder">
-            <a href="<%=topics[i].move%>"><img width="260" height="250" src="<%= topics[i].pig %>"></a>
+        <div class="img-holder" onclick="window.open('<%=topics[i].move%>')">
+            <img width="260" height="250" src="<%= topics[i].pig %>"></a>
         </div>
         <div class="bottom-holder" >
             <strong><%= topics[i].name %></strong>
@@ -31,14 +31,16 @@
             <div class="reply-box">
               <% for(var j=0; j<topics[i].comment.length; j++) {%>
                 <div class="reply">
-                    <img src="https://dummyimage.com/25x25/4dba9b/fff" alt="">
-                    <!-- <strong><%= topics[i].title %></strong> -->
-                    <p><%= topics[i].comment[j] %> </p>
+                    <img src="comment.png"width='30', height='30' alt="">
+                    <strong><%= topics[i].comment[j].nickname %></strong>
+                    <p><%= topics[i].comment[j].desc %> </p>
                     <ul>
                         <!-- <li><a href="#">수정</a></li> -->
                         <form class="" action="/remove" method="post">
                           <input  type="hidden" name="pig" value='<%= topics[i].pig %>' >
-                          <input  type="hidden" name="remove" value='<%=topics[i].comment[j]%>' >
+                          <input  type="hidden" name="nickname" value='<%=topics[i].comment[j].nickname%>' >
+                          <input  type="hidden" name="desc" value='<%=topics[i].comment[j].desc%>' >
+
                           <button type="submit" >삭제</button>
                         </form>
                     </ul>
@@ -48,6 +50,7 @@
             <div>
               <form style="display:none" id='<%=topics[i].pig%>' class="form" action="/" method="post">
                   <input  type="hidden" name="pig" value='<%= topics[i].pig %>' >
+                      <p>닉네임: <input type="text" name="nickname" value=""></p>
                     댓글: <input type="textarea" name="desc">
                     <input type="submit" value="작성">
               </form>
