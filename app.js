@@ -1,15 +1,28 @@
 var express = require('express');
 var app = express();
+var mongoose = require('mongoose');
 const bodyParser= require('body-parser')
-const MongoClient = require('mongodb').MongoClient
+// const MongoClient = require('mongodb').MongoClient
 
-var mongoDB = 'mongodb://user:111111@ds157571.mlab.com:57571/meeteamdb';
-var db
+// var mongoDB = 'mongodb://user:111111@ds157571.mlab.com:57571/meeteamdb';
+// var db
 
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}))
 
+
+
+//Set up default mongoose connection
+var mongoDB = 'mongodb://127.0.0.1/DB';
+mongoose.connect(mongoDB);
+
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+/*
 MongoClient.connect(mongoDB, (err, database) => {
 	if (err) return console.log(err)
 	db = database
@@ -17,12 +30,18 @@ MongoClient.connect(mongoDB, (err, database) => {
 		console.log('listening on 3000')
 	})
 })
+*/
+
+app.listen(3000, () => {
+	console.log('listening on 3000')
+})
 
 app.get('/', (req, res) => {
-  db.collection('test').find().toArray((err, result) => {
+  db.collection('meteams').find().toArray((err, result) => {
+	  console.log("result is :: ", result)
     if (err) return console.log(err)
     // renders index.ejs
-    res.render('index.ejs', {quotes: result})
+    res.render('index.ejs', {topics: result})
   })
 })
 

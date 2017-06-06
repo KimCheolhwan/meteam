@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>MeeTeam</title>
     <link rel="stylesheet" href="src/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header>
@@ -28,7 +32,9 @@
         <div class="bottom-holder" >
             <strong><%= topics[i].name %></strong>
             <p> <%= topics[i].title %> </p>
+
             <div class="reply-box">
+				<% if(topics[i].comment != undefined){ %>
               <% for(var j=0; j<topics[i].comment.length; j++) {%>
                 <div class="reply">
                     <img src="comment.png"width='30', height='30' alt="">
@@ -45,17 +51,18 @@
                     </ul>
                 </div>
                 <% }%>
+				<% }%>
             </div>
             <div>
               <form style="display:none" id='<%=topics[i].pig%>' class="form" action="/" method="post">
                   <input  type="hidden" name="pig" value='<%= topics[i].pig %>' >
-                      <p>닉네임: <input type="text" name="nickname" value=""></p>
-                    댓글: <input type="textarea" name="desc">
-                    <input type="submit" value="작성">
+                  	<p>Nick Name:<input type="text" name="nickname" class="form-control" value="" placeholder="Please enter NickName" style="margin:0px;width:240px"></p>
+                  	<p>Comment: <textarea name+="desc" class="form-control" placeholder="Please enter Comment" style="margin:0px;height:100px; width:240px;"></textarea></p>
+                  	<input class="btn btn-danger" type="submit" value="Submit">
               </form>
             </div>
           </div>
-            <button class="btn-add"  onclick='fnclick("<%=topics[i].pig%>")' >add comment</button>
+            <button class="btn-add"  onclick='fnclick("<%=topics[i].pig%>")' >Add Comment</button>
         </div>
     <% } %>
   </div>
