@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 </head>
 <body>
 <header>
@@ -25,9 +25,9 @@
 </header>
 <div class="container">
     <% for(var i=0; i<topics.length; i++) {%>
-      <div class="grid">
+      <div class="grid" >
         <div class="img-holder" onclick="window.open('<%=topics[i].move%>')">
-            <img width="260" height="250" src="<%= topics[i].pig %>"></a>
+            <img width="248.5" height="250" src="<%= topics[i].pig %>"></a>
         </div>
         <div class="bottom-holder" >
             <strong><%= topics[i].name %></strong>
@@ -39,7 +39,7 @@
                 <div class="reply">
                     <img src="comment.png"width='30', height='30' alt="">
                     <strong><%= topics[i].comment[j].nickname %></strong>
-                    <p><%= topics[i].comment[j].desc %> </p>
+                    <div  style="width:200; VISIBILITY:visible"><%= topics[i].comment[j].desc %> </div>
                     <ul>
                         <!-- <li><a href="#">수정</a></li> -->
                         <form class="" action="/remove" method="post">
@@ -56,8 +56,8 @@
             <div>
               <form style="display:none" id='<%=topics[i].pig%>' class="form" action="/" method="post">
                   <input  type="hidden" name="pig" value='<%= topics[i].pig %>' >
-                  	<p>Nick Name:<input type="text" name="nickname" class="form-control" value="" placeholder="Please enter NickName" style="margin:0px;width:240px"></p>
-                  	<p>Comment: <textarea name+="desc" class="form-control" placeholder="Please enter Comment" style="margin:0px;height:100px; width:240px;"></textarea></p>
+                  	<p>Nick Name:<input type="text" name="nickname" class="form-control" value="" placeholder="Please enter NickName" style="margin:0px;"></p>
+                  	<p>Comment: <textarea name="desc" class="form-control" placeholder="Please enter Comment" style="margin:0px;height:100px; "></textarea></p>
                   	<input class="btn btn-danger" type="submit" value="Submit">
               </form>
             </div>
@@ -110,7 +110,6 @@
                 });
             }
         });
-
     });
     function fnclick(param){
         var form = document.getElementById(param);
@@ -119,7 +118,34 @@
               }else {
                 $(form).css('display','inline');
               }
+              retiled();
 
+    }
+    function retiled() {
+      var winWidth = $(window).width();
+        var conWidth;
+        var col;
+        if(winWidth < 540) {
+            conWidth = 268;
+            col = 1
+        } else if(winWidth < 810) {
+            conWidth = 536;
+            col = 2
+        } else if(winWidth < 1080) {
+            conWidth = 804;
+            col = 3;
+        } else {
+            conWidth = 1072;
+            col = 4;
+        }
+
+            $('.container').width(conWidth);
+            $('.container').BlocksIt({
+                numOfCol: col,
+                offsetX: 6,
+                offsetY: 15,
+                blockElement: '.grid'
+            });
     }
 </script>
 </body>
